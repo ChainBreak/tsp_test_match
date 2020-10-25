@@ -33,9 +33,16 @@ Install the required packages
 pip install fastapi uvicorn pytest requests
 ```
 
+Install this package in the virtual environment in edit mode.
+This makes it easy for modules to find each other.
+```
+pip install -e .
+```
+
+# Run
 Run the server. Reload means the server will restart automatically when you make code changes
 ```
-uvicorn server:app --reload
+uvicorn tsp_test_match.server:app --reload
 ```
 
 # Test
