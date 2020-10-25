@@ -51,6 +51,11 @@ Just run pytest and it will find all the tests and run them
 pytest code_tests
 ```
 
+# Auto Docs
+FastAPI is magic. It generates documentation based on the interface specified in the server.
+When the server is running go to.
+http://127.0.0.1:8000/docs
+
 
 # TODO
 - Implement tspgame so that it generates city locations.
