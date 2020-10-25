@@ -46,14 +46,19 @@ uvicorn tsp_test_match.server:app --reload
 ```
 
 # Test
+Just run pytest and it will find all the tests and run them
 ```
-pytest
+pytest code_tests
 ```
 
 
 # TODO
-- 
+- Implement tspgame so that it generates city locations.
+- Make it so tspgame can rank paths in shortest order
+- Make a client that renders the game for display on the big screen
+- Make the tsp manager create a new game each day
 
 # Ideas
-- Each day we should position cities so that it favour different types of algorithms. eg draw a circle that a gready search will be best at
+- Each day we should position cities so that it favour different types of algorithms. eg draw a circle that a gready search will be best at.
+- Make the number of cities big and small. Some days an exact solutions is possible and other days heuristics are needed.
 
