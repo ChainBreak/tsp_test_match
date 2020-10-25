@@ -30,7 +30,7 @@ source ./env/bin/activate
 
 Install the required packages
 ```
-pip install fastapi uvicorn
+pip install fastapi uvicorn pytest requests
 ```
 
 Run the server. Reload means the server will restart automatically when you make code changes

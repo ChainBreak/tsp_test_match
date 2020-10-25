@@ -1,9 +1,8 @@
 
 from fastapi import FastAPI
 from typing import List, Optional
-from datamodels import Submission, SubmissionResponse, LeaderBoard, Cities
-from tspmanager import TspManager
-
+from tsp_test_match.datamodels import Submission, SubmissionResponse, LeaderBoard, Cities
+from tsp_test_match.tspmanager import TspManager
 
 
 
@@ -14,9 +13,10 @@ tsp_manager = TspManager()
 async def root():
     return "Hello There"
 
-@app.get("/leader_board", response_model=LeaderBoard)
-async def leader_board():
-    pass
+@app.get("/leaderboard", response_model=LeaderBoard)
+async def leaderboard():
+    game = tsp_manager.get_game()
+    return game.get_leaderboard()
 
 @app.get("/cities", response_model=Cities)
 async def cities():

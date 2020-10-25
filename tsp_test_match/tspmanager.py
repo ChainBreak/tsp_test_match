@@ -1,5 +1,5 @@
 # The TSP Manager should be responsible for create a new game each day/week
-from tspgame import TspGame
+from tsp_test_match.tspgame import TspGame
 
 class TspManager():
     def __init__(self):
