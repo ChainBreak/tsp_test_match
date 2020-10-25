@@ -38,6 +38,10 @@ Run the server. Reload means the server will restart automatically when you make
 uvicorn server:app --reload
 ```
 
+# Test
+```
+pytest
+```
 
 
 # TODO
