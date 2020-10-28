@@ -11,7 +11,7 @@ address = "127.0.0.1"
 port = 1337
 
 def run_server():
-    uvicorn.run("tsp_test_match.server:app",host=address, port=port)
+    uvicorn.run("tsp_tournament.server:app",host=address, port=port)
 
 # https://docs.pytest.org/en/stable/fixture.html
 @pytest.fixture(scope="session")

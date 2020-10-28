@@ -1,8 +1,8 @@
 
 from fastapi import FastAPI
 from typing import List, Optional
-from tsp_test_match.datamodels import Submission, SubmissionResponse, LeaderBoard, Cities
-from tsp_test_match.tspmanager import TspManager
+from tsp_tournament.datamodels import Submission, SubmissionResponse, LeaderBoard, Cities
+from tsp_tournament.tspmanager import TspManager
 
 
 

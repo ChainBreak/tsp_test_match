@@ -1,4 +1,4 @@
-# tsp_test_match
+# Traveling Salesman Problem Tournament
 A Server that host a Traveling Salesman Problem Tournament where clients compete by submitting shortest paths
 
 # Setup
@@ -30,7 +30,7 @@ source ./env/bin/activate
 
 Install the required packages
 ```
-pip install fastapi uvicorn pytest requests
+pip install fastapi uvicorn pytest requests numpy
 ```
 
 Install this package in the virtual environment in edit mode.
@@ -42,7 +42,7 @@ pip install -e .
 # Run
 Run the server. Reload means the server will restart automatically when you make code changes
 ```
-uvicorn tsp_test_match.server:app --reload
+uvicorn tsp_tournament.server:app --reload
 ```
 
 # Test

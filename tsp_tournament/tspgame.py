@@ -1,5 +1,5 @@
 
-from tsp_test_match.datamodels import Submission, SubmissionResponse, LeaderBoard, Cities
+from tsp_tournament.datamodels import Submission, SubmissionResponse, LeaderBoard, Cities
 
 class TspGame():
 
