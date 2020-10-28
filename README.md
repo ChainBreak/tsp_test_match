@@ -5,12 +5,12 @@ A Server that host a Traveling Salesman Problem Tournament where clients compete
  
 Clone this repo
 ```
-git clone git@github.com:ChainBreak/tsp_test_match.git
+git clone git@github.com:ChainBreak/tsp_tournament.git
 ```
 
 Navigate to this folder
 ```
-cd path/to/tsp_test_match
+cd path/to/tsp_tournament
 ```
 
 Make sure you have you have virtual env installed
@@ -30,7 +30,7 @@ source ./env/bin/activate
 
 Install the required packages
 ```
-pip install fastapi uvicorn pytest requests numpy
+pip install fastapi uvicorn pytest requests numpy sortedcontainers
 ```
 
 Install this package in the virtual environment in edit mode.

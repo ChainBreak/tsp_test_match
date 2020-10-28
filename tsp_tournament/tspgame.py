@@ -2,14 +2,16 @@
 import math
 import random
 import numpy as np
-from tsp_tournament.datamodels import Submission, SubmissionResponse, LeaderBoard, Cities
+from sortedcontainers import SortedList
+from tsp_tournament.datamodels import Submission, SubmissionResponse, LeaderBoard,LeaderBoardSubmission, Cities
 
+# http://www.grantjenks.com/docs/sortedcontainers/sortedlist.html
 
 class TspGame():
 
     def __init__(self):
         self.dim = 2
-        self.leader_board = []
+        self.leader_board = SortedList(key=lambda x: x.path_length)
         self.city_locations = self.generate_city_locations()
         self.city_locations_np = np.array(self.city_locations)
         self.num_cities = len(self.city_locations)
@@ -20,6 +22,8 @@ class TspGame():
     def submit(self, submission : Submission) ->  SubmissionResponse:
         try:
             path_length = self.compute_path_length(submission.city_order)
+
+
 
             return SubmissionResponse(rank = -1, path_length=path_length, error_msg="")
         except Exception as e:
@@ -33,10 +37,10 @@ class TspGame():
 
     def get_leaderboard(self) -> LeaderBoard:
         submission_list = [
-            Submission(user_name="1",city_order=[1,2,3]),
-            Submission(user_name="2",city_order=[3,2,1]),
+            LeaderBoardSubmission(user_name="1",city_order=[1,2,3]),
+            LeaderBoardSubmission(user_name="2",city_order=[3,2,1]),
         ]
-        return LeaderBoard(submission_count=1, leading_submissions=submission_list)
+        return LeaderBoard(total_submission_count=1, leading_submissions=submission_list)
 
 
     def generate_city_locations(self):

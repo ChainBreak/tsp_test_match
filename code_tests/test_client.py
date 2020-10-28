@@ -32,7 +32,7 @@ def test_get_cities(server):
 def test_get_leaderboard(server):
     response = requests.get(f"http://{address}:{port}/leaderboard")
     assert response.status_code == 200
-    assert type(response.json()["submission_count"]) is int
+    assert type(response.json()["total_submission_count"]) is int
     assert type(response.json()["leading_submissions"]) is list
 
 
@@ -46,4 +46,20 @@ def test_post_submit(server):
     response = requests.post(f"http://{address}:{port}/submit",json=data)
     assert response.status_code == 200
     assert type(response.json()["rank"]) is int
+
+
+def test_dummy_player(server):
+    response = requests.get(f"http://{address}:{port}/cities")
+    assert response.status_code == 200
+    city_locations = response.json()["city_locations"]
+
+    data = {
+        "user_name": "tom",
+        "algorithm_name": "test_boy",
+        "message": "hello",
+        "city_order": list(range(len(city_locations)))
+    }
+    response = requests.post(f"http://{address}:{port}/submit",json=data)
+    assert response.status_code == 200
+    assert response.json()["path_length"] > 0.0
 
