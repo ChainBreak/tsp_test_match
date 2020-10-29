@@ -17,7 +17,7 @@ class SubmissionResponse(BaseModel):
 class Cities(BaseModel):
     city_locations : List[List[float]]
 
-class LeaderBoardSubmission(BaseModel):
+class LeaderBoardEntry(BaseModel):
     user_name      : str
     algorithm_name : Optional[str]
     message        : Optional[str]
@@ -26,4 +26,4 @@ class LeaderBoardSubmission(BaseModel):
 
 class LeaderBoard(BaseModel):
     total_submission_count : int
-    leading_submissions    : List[LeaderBoardSubmission]
+    leading_submissions    : List[LeaderBoardEntry]
