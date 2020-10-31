@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     # Print the details of our submission to see how we went
     print(f"Path Length: {submission_response_json['path_length']}")
-    print(f"Rank: {submission_response_json['rank']}")
+
 
 
 

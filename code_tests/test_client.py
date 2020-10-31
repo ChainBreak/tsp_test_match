@@ -45,7 +45,7 @@ def test_post_submit(server):
     }
     response = requests.post(f"http://{address}:{port}/submit",json=data)
     assert response.status_code == 200
-    assert type(response.json()["rank"]) is int
+
 
 
 def test_dummy_player(server):

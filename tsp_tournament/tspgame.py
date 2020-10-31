@@ -12,7 +12,7 @@ class TspGame():
     def __init__(self):
         self.dim = 2
         self.max_leader_board_size = 5
-        self.leader_board = []
+        self.leader_board = {}
         self.total_submission_count = 0
         self.city_locations = self.generate_city_locations()
         self.city_locations_np = np.array(self.city_locations)
@@ -36,46 +36,52 @@ class TspGame():
                 path_length    = path_length,
             )
 
+            # Increase the submission count
             self.total_submission_count += 1
 
-            # Start off the rank as the current length of the leader board
-            rank = len(self.leader_board)
-            
-            #start at the bottom of the leader to find the place to insert
-            for i in range(len(self.leader_board)-1,-1,-1):
-                # If the path is shorter than this spot in the leaderboard. set the rank to that spot
-                # The rank is used as the index to insert this entry
-                if path_length < self.leader_board[i].path_length:
-                    rank = i
-                else:
-                    # If not smaller stop here
-                    break
+            # Update the leaderboard with this new entry
+            self.update_leader_board(leaderboard_entry)
 
-            # Insert this entry. Note that it will be append if rank is equal to the length
-            self.leader_board.insert(rank,leaderboard_entry)
-
-            # Remove the last entry if the leaderboard is full
-            if len(self.leader_board) > self.max_leader_board_size:
-                del self.leader_board[-1]
-
-            # Set the rank to -1 if it is larger than our leaderboard
-            if rank >= self.max_leader_board_size:
-                rank = -1 
-
-
-            return SubmissionResponse(rank = rank, path_length=path_length, error_msg="")
+            # Respond saying its "all g mate"
+            return SubmissionResponse(success=True , path_length=path_length, error_msg=""     )
 
         except Exception as e:
-            return SubmissionResponse(rank = -1, path_length=-1.0, error_msg=str(e))
+            return SubmissionResponse(success=False, path_length=-1.0       , error_msg=str(e) )
 
-       
+    def update_leader_board(self, leaderboard_entry):
+        # Each user name can only be in the leaderboard once
+        # User names are used to make unique entries
+
+        # Get the user name for this entry
+        user_name = leaderboard_entry.user_name
+
+        # Check if the user is already in the leader board
+        if user_name in self.leader_board:
+
+            # Only update if the new entry is better
+            # Check if the new entry is better than the current and update
+            if leaderboard_entry.path_length < self.leader_board[user_name].path_length:
+                self.leader_board[user_name] = leaderboard_entry
+
+        else:
+            #If not already in the list then just add it
+            self.leader_board[user_name] = leaderboard_entry
+
 
     def get_cities(self) -> Cities:
         return Cities(city_locations=self.city_locations)
 
 
     def get_leaderboard(self) -> LeaderBoard:
-        return LeaderBoard(total_submission_count=self.total_submission_count, leading_submissions=self.leader_board)
+
+        # Get the leader board entries
+        leaderboard_list = self.leader_board.values()
+
+        # Sort the leader board by the path lengths
+        leaderboard_list = sorted(leaderboard_list, key=lambda x: x.path_length)
+
+        # Return leaderboard
+        return LeaderBoard(total_submission_count=self.total_submission_count, leading_submissions=leaderboard_list)
 
 
     def generate_city_locations(self):

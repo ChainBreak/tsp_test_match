@@ -9,8 +9,8 @@ class Submission(BaseModel):
 
 
 class SubmissionResponse(BaseModel):
-    rank       : int
     path_length: float
+    success    : bool
     error_msg  : str
 
 
