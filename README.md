@@ -30,7 +30,7 @@ source ./env/bin/activate
 
 Install the required packages
 ```
-pip install fastapi uvicorn pytest requests numpy sortedcontainers
+pip install fastapi uvicorn pytest requests numpy jinja2 aiofiles
 ```
 
 Install this package in the virtual environment in edit mode.
@@ -42,7 +42,8 @@ pip install -e .
 # Run
 Run the server. Reload means the server will restart automatically when you make code changes
 ```
-uvicorn tsp_tournament.server:app --reload
+cd tsp_tournament
+uvicorn server:app --reload
 ```
 
 # Test
@@ -58,8 +59,6 @@ http://127.0.0.1:8000/docs
 
 
 # TODO
-- Implement tspgame so that it generates city locations.
-- Make it so tspgame can rank paths in shortest order
 - Make a client that renders the game for display on the big screen
 - Make the tsp manager create a new game each day
 

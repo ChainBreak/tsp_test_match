@@ -1,5 +1,8 @@
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from typing import List, Optional
 from tsp_tournament.datamodels import Submission, SubmissionResponse, LeaderBoard, Cities
 from tsp_tournament.tspmanager import TspManager
@@ -7,10 +10,17 @@ from tsp_tournament.tspmanager import TspManager
 
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
+templates = Jinja2Templates(directory="templates")
+
 tsp_manager = TspManager()
 
-@app.get("/")
-async def root():
+# https://fastapi.tiangolo.com/advanced/templates/
+
+@app.get("/",response_class=HTMLResponse)
+async def index():
     return "Hello There"
 
 @app.get("/leaderboard", response_model=LeaderBoard)
