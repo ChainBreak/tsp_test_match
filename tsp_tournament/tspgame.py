@@ -10,7 +10,7 @@ from tsp_tournament.datamodels import Submission, SubmissionResponse, LeaderBoar
 class TspGame():
 
     def __init__(self):
-        self.dim = 2
+        self.dim = 3
         self.max_leader_board_size = 5
         self.leader_board = {}
         self.total_submission_count = 0
@@ -81,12 +81,12 @@ class TspGame():
         leaderboard_list = sorted(leaderboard_list, key=lambda x: x.path_length)
 
         # Return leaderboard
-        return LeaderBoard(total_submission_count=self.total_submission_count, leading_submissions=leaderboard_list)
+        return LeaderBoard(total_submission_count=self.total_submission_count, city_locations=self.city_locations, leading_submissions=leaderboard_list)
 
 
     def generate_city_locations(self):
-        num_cities = random.randint(5,500)  
-        return [[random.randint(50,1000) for d in range(self.dim)] for i in range(num_cities)]
+        num_cities = random.randint(15,1000)  
+        return [[random.randint(0,1000) for d in range(self.dim)] for i in range(num_cities)]
 
 
     def compute_path_length(self,city_order_list):

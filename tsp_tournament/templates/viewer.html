@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <script src="{{url_for('static', path='/plotly-latest.min.js')}}"></script>
+        <script src="{{url_for('static', path='/jquery.min.js')}}"></script>
+        
+    </head>
+    <body>
+        <div id="plot_div" style="width:100%;height:100%;"></div>
+    </body>
+    <script>
+        //https://plotly.com/javascript/
+
+
+        
+
+        function request_leaderboard()
+        {
+            // Request leaderboard data as json
+            $.getJSON("{{url_for('leaderboard')}}", leaderboard_callback);
+        }
+        
+        //This is called when the server sends back the leaderboard json data
+        function leaderboard_callback(json_data)
+        {
+            //Extract the city locations from the json data
+            var city_locations = json_data.city_locations;
+            var l = city_locations.length;
+
+            // Create some lists to hold the x,y,z coordinates of the cities
+            var city_x = [];
+            var city_y = [];
+            var city_z = [];
+
+            // Foreach city pull out the x,y,z component
+            city_locations.forEach(city => {
+                city_x.push(city[0]);
+                city_y.push(city[1]);
+                city_z.push(city[2]);
+            });
+
+            // Create an empty array to hold the traces to be plotted
+            data = [];
+
+            // Create a trace object that will plot markers at each city location
+            var city_marker_trace = {
+                name : "Cities",
+                type : 'scatter3d',
+                x    : city_x,
+                y    : city_y,
+                z    : city_z,
+                mode : "markers",
+            };
+
+            // Add the city marker to the data list
+            data.push(city_marker_trace);
+            
+            // For each submission in the leaderboard
+            json_data.leading_submissions.forEach(submission => {
+                
+                // Creaty empty list for the x,y,z components of the path
+                var path_x = [];
+                var path_y = [];
+                var path_z = [];
+                
+                // Use the city ordering from the submission to the x,y,z coordinates to plot the path
+                submission.city_order.forEach(city_index => {
+                    path_x.push( city_x[city_index] );
+                    path_y.push( city_y[city_index] );
+                    path_z.push( city_z[city_index] );
+                });
+
+                // Close the path into a loop by adding the first city to the ine
+                path_x.push( path_x[0] );
+                path_y.push( path_y[0] );
+                path_z.push( path_z[0] );
+
+                var path = {
+                    name : submission.user_name,
+                    type : 'scatter3d',
+                    x    : path_x,
+                    y    : path_y,
+                    z    : path_z,
+                    mode : "lines",
+                };
+
+                data.push(path);
+            });
+            
+
+            var layout = { 
+            title: 'Traveling Salesman Tournament',
+            font: {size: 18},
+            margin: {
+                    l: 0,
+                    r: 0,
+                    b: 0,
+                    t: 65
+                },
+                scene: {
+                    xaxis: {
+                        title: '',
+                        autorange: true,
+                        showgrid: false,
+                        zeroline: false,
+                        showline: false,
+                        autotick: true,
+                        ticks: '',
+                        showticklabels: false
+                    },
+                    yaxis: {
+                        title: '',
+                        autorange: true,
+                        showgrid: false,
+                        zeroline: false,
+                        showline: false,
+                        autotick: true,
+                        ticks: '',
+                        showticklabels: false
+                    },
+                    zaxis: {
+                        title: '',
+                        autorange: true,
+                        showgrid: false,
+                        zeroline: false,
+                        showline: false,
+                        autotick: true,
+                        ticks: '',
+                        showticklabels: false
+                    }
+                    },
+
+            };
+
+                
+
+            var config = {responsive: true}
+
+            Plotly.newPlot('plot_div', data, layout, config );
+
+        }
+
+        request_leaderboard();
+
+    </script>
+</html>

@@ -26,4 +26,5 @@ class LeaderBoardEntry(BaseModel):
 
 class LeaderBoard(BaseModel):
     total_submission_count : int
+    city_locations         : List[List[float]]
     leading_submissions    : List[LeaderBoardEntry]

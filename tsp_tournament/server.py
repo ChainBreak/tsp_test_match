@@ -1,4 +1,5 @@
 
+import asyncio
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
@@ -20,8 +21,13 @@ tsp_manager = TspManager()
 # https://fastapi.tiangolo.com/advanced/templates/
 
 @app.get("/",response_class=HTMLResponse)
-async def index():
-    return "Hello There"
+async def index(request: Request):
+    print(request)
+    return templates.TemplateResponse("index.html", {"request": request, "id": "test"})
+
+@app.get("/viewer",response_class=HTMLResponse)
+async def viewer(request: Request):
+    return templates.TemplateResponse("viewer.html", {"request": request})
 
 @app.get("/leaderboard", response_model=LeaderBoard)
 async def leaderboard():
