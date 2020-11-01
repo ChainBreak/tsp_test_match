@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     # Create a submission dict with the details of our submission
     submit_json = {
-        "user_name"     : f"demo_client{random.randint(0,5)}",
+        "user_name"     : "demo_client",
         "algorithm_name": "random shuffle",
         "message"       : "Try and beat this fantastic algorithm",
         "city_order"    : city_order
