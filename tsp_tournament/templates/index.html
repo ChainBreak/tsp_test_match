@@ -1,9 +1,14 @@
 <html>
 <head>
-    <title>Item Details</title>
-    <link href="{{ url_for('static', path='/styles.css') }}" rel="stylesheet">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>Traveling Space Salesman</title>
+    <link href="{{ url_for('static', path='/codehilite_styles.css') }}" rel="stylesheet">
 </head>
 <body>
-    <h1>Item ID: {{ id }}</h1>
+    <h1>Traveling Space Salesman</h1>
+    <a href="{{url_for('viewer')}}">3D Viewer</a>
+    <h2>Python Example</h2>
+    {{code_html|safe}}
+     
 </body>
 </html>

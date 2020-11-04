@@ -25,9 +25,13 @@ if __name__ == "__main__":
     # Create a defult list of every city index
     city_order = list(range(len(city_locations)))
 
-    # Suffle the list to visit each city in a random order
-    # TODO: Write a better algorithm
+
+
+    ### WRITE YOUR SOLVER HERE ###
     random.shuffle(city_order)
+    ##############################
+
+
 
     # Create a submission dict with the details of our submission
     submit_json = {

@@ -30,7 +30,7 @@ source ./env/bin/activate
 
 Install the required packages
 ```
-pip install fastapi uvicorn pytest requests numpy jinja2 aiofiles
+pip install fastapi uvicorn pytest requests numpy jinja2 aiofiles markdown pygments
 ```
 
 Install this package in the virtual environment in edit mode.
