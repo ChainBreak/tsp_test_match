@@ -10,7 +10,7 @@ from tsp_tournament.datamodels import Submission, SubmissionResponse, LeaderBoar
 class TspGame():
 
     def __init__(self):
-        self.dim = 3
+        self.dim = 2
         self.max_leader_board_size = 5
         self.leader_board = {}
         self.total_submission_count = 0
