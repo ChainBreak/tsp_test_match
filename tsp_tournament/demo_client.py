@@ -1,14 +1,12 @@
 import requests #pip install requests
 import random
 
-address = "127.0.0.1"
-port = 8000
-
+base_url = "http://127.0.0.1:8000/"
 
 if __name__ == "__main__":
 
     # Request for all the cities.
-    cities_response = requests.get(f"http://{address}:{port}/cities")
+    cities_response = requests.get(f"{base_url}cities")
 
     # Get the json data as python dict
     cities_json = cities_response.json()
@@ -42,7 +40,7 @@ if __name__ == "__main__":
     }
 
     # Post our submission to the server
-    submission_response = requests.post(f"http://{address}:{port}/submit",json=submit_json)
+    submission_response = requests.post(f"{base_url}submit",json=submit_json)
 
     # Get the json from the response to our submission
     submission_response_json = submission_response.json()

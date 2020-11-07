@@ -25,21 +25,20 @@ with open("demo_client.py",'r') as f:
     code = "\t"+"\t".join(code_lines)
     code_html = markdown(f"\n\t::python\n{code}\n", extensions=["codehilite"])
 
-# with open("templates/index.md",'r') as f:
-#     md = f.read()
-#     code_html = markdown(md, extensions=["codehilite"])
-
-
-# https://fastapi.tiangolo.com/advanced/templates/
 
 @app.get("/",response_class=HTMLResponse)
 async def index(request: Request):
-    print(request.client.host,request.client.port)
-    return templates.TemplateResponse("index.html", {"request": request, "code_html": code_html})
+
+    template_dict = {
+        "request": request, 
+        "code_html": code_html.replace("http://127.0.0.1:8000/",str(request.base_url)), 
+        "docs_url": f"{request.base_url}docs"
+    }
+    return templates.TemplateResponse("index.html", template_dict)
 
 @app.get("/viewer",response_class=HTMLResponse)
 async def viewer(request: Request):
-    return templates.TemplateResponse("viewer.html", {"request": request})
+    return templates.TemplateResponse("viewer.html", {"request": request,})
 
 @app.get("/leaderboard", response_model=LeaderBoard)
 async def leaderboard():
