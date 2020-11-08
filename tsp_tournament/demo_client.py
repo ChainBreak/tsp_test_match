@@ -46,7 +46,8 @@ if __name__ == "__main__":
     submission_response_json = submission_response.json()
 
     # Print the details of our submission to see how we went
-    print(f"Path Length: {submission_response_json['path_length']}")
+    print(f"Submit Success: {submission_response_json['success']}")
+    print(f"Path Length   : {submission_response_json['path_length']}")
 
 
 

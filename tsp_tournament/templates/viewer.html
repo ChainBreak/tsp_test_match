@@ -1,16 +1,34 @@
 <html>
     <head>
+        <title>Traveling Salesman Tournament</title>
         <script src="{{url_for('static', path='/plotly-latest.min.js')}}"></script>
         <script src="{{url_for('static', path='/jquery.min.js')}}"></script>
         
     </head>
-    <body>
+    <body style="margin: 0;">
         <div id="plot_div" style="width:100%;height:100%;"></div>
     </body>
     <script>
         //https://plotly.com/javascript/
        
+        var max_leaderboard_length = 10;
 
+        // Reload the page every hour
+        var reload_timer = setInterval(function(){
+            window.location.reload(1);
+        }, 60*60*1000)
+
+        // Frequenty request the leaderboad and redraw the plot
+        var update_timer = setInterval(update_timer_callback, 10*1000);
+        request_leaderboard();
+
+        // Is called with update is initiated
+        function update_timer_callback()
+        {
+            request_leaderboard();
+        }
+
+        // Request the leaderboard from the server
         function request_leaderboard()
         {
             // Request leaderboard data as json
@@ -40,19 +58,37 @@
             // Create a trace object that will plot markers at each city location
             var city_marker_trace = {
                 name : "Cities",
+                showlegend: false,
                 type : 'scatter',
                 x    : city_x,
                 y    : city_y,
                 mode : "markers",
+                marker: {
+                    symbol: "diamond",
+                    color: "rgb(255,255,255)",
+                },
             };
             
             // Add the city marker to the data list
             data.push(city_marker_trace);
             
+            //
+            var best_path_length = 1;
+
+            // Get the path length of the first leadding submission as it is the best
+            if (json_data.leading_submissions.length > 0)
+            {
+                best_path_length = json_data.leading_submissions[0].path_length;
+            }
+            
+            // Get the max length of the leader board that will be displayed
+            var leaderboard_length = Math.min(max_leaderboard_length, json_data.leading_submissions.length)
             
             // For each submission in the leaderboard
-            json_data.leading_submissions.forEach(submission => {
-                
+            for (let i = 0; i < leaderboard_length; i++) {
+
+                const submission = json_data.leading_submissions[i];
+                                
                 // Creaty empty list for the x,y,z components of the path
                 var path_x = [];
                 var path_y = [];
@@ -66,23 +102,43 @@
                 // Close the path into a loop by adding the first city to the ine
                 path_x.push( path_x[0] );
                 path_y.push( path_y[0] );
+                
+                // Get the length of this path as a ratio of the best path.
+                // I think a ratio is a better way to measure performance
+                var length_ratio = submission.path_length / best_path_length
 
-                var path = {
-                    name : submission.user_name,
+                // Decrease the opacity as we move down the leaderboard
+                var opacity = (leaderboard_length-i)/leaderboard_length
+
+                // Create a trace for this path
+                var path_trace = {
+                    name : length_ratio.toFixed(3) + " " + submission.user_name  ,
                     type : 'scatter',
                     x    : path_x,
                     y    : path_y,
                     mode : "lines",
+                    opacity: opacity,
+                    color_discrete_sequence: 
                 };
+                
+                //
+                data.push(path_trace);
+            };
 
-                data.push(path);
-            });
-
+            // Reverse the paths so the best path is draw last and on top of the others
+            data.reverse()
             
 
             var layout = { 
                 title: 'Traveling Salesman Tournament',
-                font: {size: 18},
+                font: {
+                    size: 24,
+                    color: "rgb(255,255,255)",
+                },
+                
+                paper_bgcolor: "rgb(0,0,0)",
+                plot_bgcolor: "rgb(0,0,0)",
+
                 margin: {
                     l: 0,
                     r: 0,
@@ -91,9 +147,21 @@
                 },
                 
                 legend:{
+                    title:{
+                        text: "Leader Board",
+                        font: {
+                            size: 20,
+                            color: "rgb(255,255,255)",
+                        },
+                    } ,
+                    traceorder: "reversed",
                     x: 0.0,
                     y: 1.0,
-                    bgcolor: "rgba(0,0,0,0.5)"
+                    bgcolor: "rgba(0,0,0,0.7)",
+                    font: {
+                        size: 16,
+                        color: "rgb(255,255,255)",
+                    },
                 },
 
                 xaxis: {
@@ -116,17 +184,31 @@
                     ticks: '',
                     showticklabels: false
                 },
+            
+                annotations: [
+                    {
+                        text: "Play at " + window.location.origin,
+                        showarrow: false,
+                        xref: 'paper',
+                        yref: 'paper',
+                        x: 0.5,
+                        xanchor: 'middle',
+                        y: 0.0,
+                        yanchor: 'bottom',
+                    }
+                ],
             };
 
                 
 
             var config = {responsive: true}
 
+            Plotly.purge('plot_div');
             Plotly.newPlot('plot_div', data, layout, config );
+            
 
         }
 
-        request_leaderboard();
 
     </script>
 </html>
