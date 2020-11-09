@@ -5,20 +5,39 @@
     <link href="{{ url_for('static', path='/codehilite_styles.css') }}" rel="stylesheet">
 </head>
 <body>
-    <h1>Traveling Salesman Tournament</h1>
-    <p>
-        <a href="{{url_for('viewer')}}">Tournament Viewer</a>
-    </p>
-    <p>
-        <a href="{{docs_url}}">API Documentation</a>
-    </p>
-    <p>
-        <a href="https://github.com/ChainBreak/tsp_tournament">Server GitHub</a>
-    </p>
-    
+    <div style="max-width: 800px; margin: auto;">
+        <h1>Traveling Salesman Tournament</h1>
+        <p>
+            This server hosts a Traveling Salesman Tournament where you must compete by writing an algorithm to find the shortest route through a set of cities. 
+        </p>
+        <p>
+            <a href="https://en.wikipedia.org/wiki/Travelling_salesman_problem" target="_blank"> Wikipedia - Travelling salesman problem </a>
+        </p>
+        <p>
+            <a href="{{url_for('viewer')}}" target="_blank">Live Leaderboard</a> 
+        </p>
+        <p>
+            <a href="{{docs_url}}" target="_blank">API Documentation</a>
+        </p>
+        <p>
+            <a href="https://github.com/ChainBreak/tsp_tournament" target="_blank">Server GitHub</a>
+        </p>
 
-    <h2>Python Example</h2>
-    {{code_html|safe}}
-     
+
+        <h2>Python Example</h2>
+        <p>This server uses FastAPI to define a set of get and post interfaces that convey json data.
+        To compete you must write some code that reqests the locations of all the cities and submits the order in which to visit them all. 
+        The python exmaple below uses the requests package to get and post json data to the server
+        </p>
+        <p>
+            <a href="{{url_for('demo')}}" download>Download Example Code</a>
+        </p>
+        {{code_html|safe}}
+
+        <h2>Contact</h2>
+        <p>thomas.rowntree@adelaide.edu.au</p>
+        <p>telnet 172.105.178.196 1337</p>
+
+    </div>
 </body>
 </html>

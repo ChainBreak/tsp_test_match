@@ -59,14 +59,7 @@ http://127.0.0.1:8000/docs
 
 
 # TODO
-- Make 3D viewer slowly rotate
-- Make viewer auto update
-- Only plot the top few submissions
-- Limit the total of number of users in the leaderboard
-- Render ledgend overtop the 3d plot
-- Make the tsp manager create a new game each day
-- Make index page show demo code and links to the viewer and docs
-- Increase transparancy for worst submissions
+
 
 # Ideas
 - Each day we should position cities so that it favour different types of algorithms. eg draw a circle that a gready search will be best at.
